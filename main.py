@@ -1,5 +1,6 @@
-import os, json, time
+import os, json, time, copy
 from datetime import datetime
+from my_utils import *
 
 #Initializing the cart and total value
 cart = {}
@@ -9,67 +10,11 @@ total_amount = 0
 try:
     with open("inventory.json", "r") as file:
         warehouse = json.load(file)
-        backup_warehouse = warehouse #Doing a backup if needed
+        backup_warehouse = copy.deepcopy(warehouse)
 except FileNotFoundError:
     print("Error: File 'inventory.json' doesn't exist, check path")
 except json.JSONDecodeError:
     print("Error: File 'inventory.json' has invalid format, check json")
-
-#Some extra and not relevant features
-def clean_console(): #Done
-    os.system("cls" if os.name == "nt" else "clear")
-
-def function_frame(func): #Done
-    def wrapper(*args, **kwargs):
-        print("""
-╔════════════════════════════════╗
-        """)
-        func(*args, **kwargs)
-        print("""
-╚════════════════════════════════╝
-    """)
-    return wrapper
-
-def frame(text): #Done
-    print(f"""
-╔════════════════════════════════╗
-   {text}
-╚════════════════════════════════╝""")
-
-@function_frame
-def show_menu(): #Done
-    menu = """  Commands:
-     1. Ver catálogo
-     2. Agregar producto al carrito
-     3. Eliminar producto del carrito
-     4. Vaciar carrito
-     5. Mostrar carrito
-     6. Finalizar compra
-     7. Salir"""
-    print(menu)
-
-@function_frame
-def welcome_message(): #Done
-    print("""  🏪✨ Welcome to Market""")
-
-@function_frame
-def goodbye_message(): #Done
-    print("""
-    ✨ Thank you for visiting!✨                           
-
-    We truly appreciate your time 
-    and trust. Your presence means 
-    a lot to us.    
-    
-    🛍️ We hope you found exactly 
-    what you were looking for! 🛒
-""")
-
-def counter_to_zero_from(seconds):
-    for remain_seconds in range(seconds, 0, -1):
-        print(f"   Restanting in {remain_seconds}")
-        time.sleep(1)
-    clean_console()
 
 # Relevant functions in main menu
 def ask_option(): #Done
@@ -169,7 +114,7 @@ def remove_from_cart(): #Done
             frame("🤔 Product-ID not found")
 
 def blank_cart(): #Done
-    global cart, total_amount
+    global cart, total_amount, warehouse
     frame("🛒❌ Vaciar carrito")
     while True:
         confirmation = input("""   Are you sure you want to remove
@@ -177,6 +122,7 @@ def blank_cart(): #Done
         if confirmation == "Y":
             cart = {}
             total_amount = 0
+            warehouse = backup_warehouse
             frame("🚮 Your cart is now empty 🧹")
             return
         elif confirmation =="N":
