@@ -1,0 +1,32 @@
+{
+    "P001": {
+        "name": "Chocolate",
+        "stock": 100,
+        "price": 1.5
+    },
+    "P002": {
+        "name": "Coffe",
+        "stock": 100,
+        "price": 9.5
+    },
+    "P003": {
+        "name": "Cereal",
+        "stock": 100,
+        "price": 16.0
+    },
+    "P004": {
+        "name": "Coconut milk",
+        "stock": 100,
+        "price": 21.0
+    },
+    "P005": {
+        "name": "Yogurt",
+        "stock": 100,
+        "price": 8.5
+    },
+    "P006": {
+        "name": "Croissant",
+        "stock": 100,
+        "price": 15.0
+    }
+}
