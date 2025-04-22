@@ -1,0 +1,18 @@
+{
+    "date_time": "2025-04-22 00:00:08",
+    "products": {
+        "P001": {
+            "name": "Chocolate",
+            "price": 1.5,
+            "quantity": 3,
+            "subtotal": 4.5
+        },
+        "P003": {
+            "name": "Cereal",
+            "price": 16.0,
+            "quantity": 3,
+            "subtotal": 48.0
+        }
+    },
+    "total": 52.5
+}
