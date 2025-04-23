@@ -15,7 +15,7 @@ except json.JSONDecodeError:
     print("Error: File 'inventory.json' has invalid format, check json")
 
 
-def ask_option():
+def ask_option() -> None:
     while True:
         show_menu()
         option = input("Option: ")
@@ -29,7 +29,7 @@ def ask_option():
             clean_console()
 
 @function_frame
-def show_catalogue():
+def show_catalogue() -> None:
     global warehouse
     print("""  🏪 Product list 🛒\n""")
 
@@ -39,7 +39,7 @@ def show_catalogue():
         📦 Availability : {info["stock"]}
 ''')
 
-def add_to_cart():
+def add_to_cart() -> None:
     global cart, warehouse
     frame("🏪 Adding products 🛒")
 
@@ -85,7 +85,7 @@ def add_to_cart():
 
     frame(f'✅ Product: "{warehouse[product_id]["name"]}" added')
 
-def remove_from_cart():
+def remove_from_cart() -> None:
     global total_amount
     frame("🚮 Remove all items 🗑️")
     while True:
@@ -106,9 +106,14 @@ def remove_from_cart():
         else:
             frame("🤔 Product-ID not found")
 
-def blank_cart():  #implementa "no puedes vaciar algo ya vació"
+def blank_cart() -> None:
     global cart, total_amount, warehouse
     frame("🛒❌ Vaciar carrito")
+
+    if cart == {}:
+        frame("⚠️  Your cart is already empty")
+        return
+
     while True:
         confirmation = input("""   Are you sure you want to remove
     all items? (Y/N): """).upper()
@@ -127,7 +132,7 @@ def blank_cart():  #implementa "no puedes vaciar algo ya vació"
        Just write "Y" or "N""")
 
 @function_frame
-def show_cart():
+def show_cart() -> None:
     global total_amount
     total_amount = 0
     print("       🛒   Shopping cart  🛒 \n")
@@ -147,7 +152,7 @@ def show_cart():
 
     frame(f"Total Order amount: {total_amount}")
 
-def finish_order():
+def finish_order() -> None:
     global cart
     show_cart()
     frame("Buying process form")
@@ -193,7 +198,7 @@ def finish_order():
     counter_to_zero_from(3)
     return
 
-def process(option):
+def process(option: str) -> None:
     commands = {
         "1" : show_catalogue, 
         "2" : add_to_cart,
@@ -204,7 +209,7 @@ def process(option):
     }
     commands.get(option)()
 
-def start_menu():
+def start_menu() -> None:
     option = 0
     clean_console()
     welcome_message()

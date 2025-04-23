@@ -1,9 +1,10 @@
 import os, time
+from typing import Callable
 
-def clean_console(): #Done
+def clean_console() -> None: 
     os.system("cls" if os.name == "nt" else "clear")
 
-def function_frame(func): #Done
+def function_frame(func: Callable) -> Callable:
     def wrapper(*args, **kwargs):
         print("""
 ╔════════════════════════════════╗
@@ -14,14 +15,14 @@ def function_frame(func): #Done
     """)
     return wrapper
 
-def frame(text): #Done
+def frame(text: str) -> None:
     print(f"""
 ╔════════════════════════════════╗
    {text}
 ╚════════════════════════════════╝""")
 
 @function_frame
-def show_menu(): #Done
+def show_menu() -> None:
     menu = """  Commands:
      1. Ver catálogo
      2. Agregar producto al carrito
@@ -33,11 +34,11 @@ def show_menu(): #Done
     print(menu)
 
 @function_frame
-def welcome_message(): #Done
+def welcome_message() -> None: 
     print("""  🏪✨ Welcome to Market""")
 
 @function_frame
-def goodbye_message(): #Done
+def goodbye_message() -> None:
     print("""
     ✨ Thank you for visiting!✨                           
 
@@ -49,7 +50,7 @@ def goodbye_message(): #Done
     what you were looking for! 🛒
 """)
 
-def counter_to_zero_from(seconds):
+def counter_to_zero_from(seconds: int) -> None:
     for remain_seconds in range(seconds, 0, -1):
         print(f"   Restarting in {remain_seconds}")
         time.sleep(1)
