@@ -1,12 +1,10 @@
-import os, json, time, copy
+import os, json, copy
 from datetime import datetime
 from my_utils import *
 
-#Initializing the cart and total value
 cart = {}
 total_amount = 0
 
-#Getting current inventory
 try:
     with open("inventory.json", "r") as file:
         warehouse = json.load(file)
@@ -16,8 +14,8 @@ except FileNotFoundError:
 except json.JSONDecodeError:
     print("Error: File 'inventory.json' has invalid format, check json")
 
-# Relevant functions in main menu
-def ask_option(): #Done
+
+def ask_option():
     while True:
         show_menu()
         option = input("Option: ")
@@ -31,7 +29,7 @@ def ask_option(): #Done
             clean_console()
 
 @function_frame
-def show_catalogue(): #Done
+def show_catalogue():
     global warehouse
     print("""  🏪 Product list 🛒\n""")
 
@@ -41,11 +39,10 @@ def show_catalogue(): #Done
         📦 Availability : {info["stock"]}
 ''')
 
-def add_to_cart(): #Done
+def add_to_cart():
     global cart, warehouse
     frame("🏪 Adding products 🛒")
 
-    # Ask and valid ID
     while True:
         product_id = input("Write ID-Product: ").upper()
         if product_id in warehouse:
@@ -53,7 +50,6 @@ def add_to_cart(): #Done
         else:
             print("Id product not found")
 
-    # Ask and valid quantity
     while True:
         stock = warehouse[product_id]["stock"]
         try:
@@ -75,7 +71,6 @@ def add_to_cart(): #Done
         except ValueError as e:
             print(e)
 
-    # Add to the cart
     if product_id in cart:
         cart[product_id]["quantity"] += qty
     else:
@@ -86,13 +81,11 @@ def add_to_cart(): #Done
             "subtotal": warehouse[product_id]["price"] * qty
         }
 
-    # Update warehouse stock
     warehouse[product_id]["stock"] -= qty
 
-    # Feedback to customer
-    frame("✅ Product added")
+    frame(f'✅ Product: "{warehouse[product_id]["name"]}" added')
 
-def remove_from_cart(): #Done
+def remove_from_cart():
     global total_amount
     frame("🚮 Remove all items 🗑️")
     while True:
@@ -113,7 +106,7 @@ def remove_from_cart(): #Done
         else:
             frame("🤔 Product-ID not found")
 
-def blank_cart(): #Done
+def blank_cart():  #implementa "no puedes vaciar algo ya vació"
     global cart, total_amount, warehouse
     frame("🛒❌ Vaciar carrito")
     while True:
@@ -134,7 +127,7 @@ def blank_cart(): #Done
        Just write "Y" or "N""")
 
 @function_frame
-def show_cart(): #Done
+def show_cart():
     global total_amount
     total_amount = 0
     print("       🛒   Shopping cart  🛒 \n")
@@ -154,8 +147,7 @@ def show_cart(): #Done
 
     frame(f"Total Order amount: {total_amount}")
 
-
-def finish_order(): #Done
+def finish_order():
     global cart
     show_cart()
     frame("Buying process form")
@@ -164,6 +156,7 @@ def finish_order(): #Done
     Insert some items 🔙""")
         counter_to_zero_from(3)
         return
+    
     while True:
         confirmation = input(""" Please confirm  payment
        Do you proceed to pay? (Y/N): """).upper()
@@ -178,18 +171,15 @@ def finish_order(): #Done
             frame("""❌ That's not a valid input
        Just write "Y" or "N""")
 
-    #Inventory updating process (Not really the best way)
     with open("inventory.json", "w") as file:
         json.dump(warehouse, file, indent=4)
 
-    #Data to be sent ot the txt
     sales_data = {
         "date_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "products": cart,
         "total": total_amount
     }
 
-    #Save orders in a txt
     historic = "sales_historic.txt"
     if not os.path.exists(historic):
         with open(historic, "w") as file:
@@ -203,7 +193,7 @@ def finish_order(): #Done
     counter_to_zero_from(3)
     return
 
-def process(option): #Done
+def process(option):
     commands = {
         "1" : show_catalogue, 
         "2" : add_to_cart,
@@ -214,7 +204,7 @@ def process(option): #Done
     }
     commands.get(option)()
 
-def start_menu(): #Done
+def start_menu():
     option = 0
     clean_console()
     welcome_message()

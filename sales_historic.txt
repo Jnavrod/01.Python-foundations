@@ -16,3 +16,15 @@
     },
     "total": 52.5
 }
+{
+    "date_time": "2025-04-22 21:54:23",
+    "products": {
+        "P001": {
+            "name": "Chocolate",
+            "price": 1.5,
+            "quantity": 10,
+            "subtotal": 15.0
+        }
+    },
+    "total": 15.0
+}
