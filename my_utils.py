@@ -51,6 +51,6 @@ def goodbye_message(): #Done
 
 def counter_to_zero_from(seconds):
     for remain_seconds in range(seconds, 0, -1):
-        print(f"   Restanting in {remain_seconds}")
+        print(f"   Restarting in {remain_seconds}")
         time.sleep(1)
     clean_console()
